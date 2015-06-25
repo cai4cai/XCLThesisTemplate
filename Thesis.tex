@@ -2,12 +2,16 @@
 \RequirePackage[l2tabu, orthodox]{nag} 
 
 \documentclass[british,a4paper,11pt,twoside]{StyleThese}
-%\documentclass[british,a4paper,11pt,twoside,draft]{StyleThese}
 
-\title{Lorem Ipsum}
-\author{Foo von Bar}
+\makeatletter
+\title{Lorem Ipsum}\let\thetitle\@title
+\author{Foo von Bar}\let\theauthor\@author
+\makeatother
 
 \include{FormatAndDefsBasic}
+
+% Do we want a draft note? Uncomment if not
+\newcommand{\draftnote}{\textcolor[gray]{0.5}{\textbf{DRAFT -- \today}}}
 \include{FormatAndDefsThesisExtra}
 
 
@@ -20,7 +24,7 @@
 
 \dominitoc
 
-\copyrightpage{2042}{Foo von Bar}
+\copyrightpage{2042}{\theauthor}
 
 \cleardoublepage
 \pagenumbering{roman}
