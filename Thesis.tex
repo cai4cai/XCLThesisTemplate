@@ -1,0 +1,47 @@
+\documentclass[british,a4paper,11pt,twoside]{StyleThese}
+%\documentclass[british,a4paper,11pt,twoside,draft]{StyleThese}
+
+\title{Lorem Ipsum}
+\author{Foo von Bar}
+
+\include{FormatAndDefsBasic}
+\include{FormatAndDefsThesisExtra}
+
+
+\begin{document}
+\frontmatter
+% trick to have different page numbers everywhere
+\pagenumbering{Roman}
+
+\include{TitlePage}
+
+\dominitoc
+
+\copyrightpage{2042}{Foo von Bar}
+
+\cleardoublepage
+\pagenumbering{roman}
+
+\chapter{Abstract}
+\input{Abstract}
+
+\cleardoublepage
+\chapter{Acknowledgments}
+\input{Acknowledgments}
+
+\cleardoublepage
+\tableofcontents
+\clearpage
+
+
+\mainmatter
+
+\include{Introduction}
+
+\include{Conclusion}
+
+\backmatter
+
+\bibliography{JNFull,ThesisBibliography}
+
+\end{document}

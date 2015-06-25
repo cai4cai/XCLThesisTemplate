@@ -1,0 +1,205 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[left=1.5in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead,headheight=13.6pt]{geometry}
+\renewcommand{\baselinestretch}{1.05}
+
+% Draft note
+\newcommand{\draftnote}{\textcolor[gray]{0.5}{\textbf{DRAFT -- \today}}}
+% No draft note (empty one)
+%\newcommand{\draftnote}{}
+
+% Fancy Header and Footer
+\usepackage{fancyhdr}
+\pagestyle{fancy} % Sets fancy header and footer
+
+\fancyhf{} % clear all header and footer fields
+
+% line width used to draw the header line
+\renewcommand{\headrulewidth}{1.0pt}
+
+\makeatletter
+
+% redefines chapter marks to use
+% the chapter number only in mainmatter
+\def\chaptermark#1{%
+ \markboth {\MakeUppercase{%
+ \ifnum \c@secnumdepth >\m@ne
+  \if@mainmatter
+   \@chapapp\ \thechapter. \ %
+  \fi
+ \fi
+#1}}
+{\ifnum \c@secnumdepth >\m@ne
+  \if@mainmatter
+   \@chapapp\ \thechapter. \ %
+  \fi
+ \fi
+#1}}%
+
+\if@twoside
+ % Page number (boldface) in left on even
+ % pages and right on odd pages
+ \fancyhead[LE,RO]{\bfseries\thepage}
+ % Chapter in the right on even pages
+ \fancyhead[RE]{\bfseries\nouppercase{\leftmark}}
+ % Section in the left on odd pages
+ \fancyhead[LO]{\bfseries\nouppercase{\rightmark}}
+
+ % Draft mark
+ \fancyfoot[LE,RO]{\draftnote}
+
+ % Page number and draft mark on plain pages
+ \fancypagestyle{plain}{
+   \fancyhf{} % clear all header and footer fields
+   \fancyfoot[C]{\bfseries\thepage}
+   \fancyfoot[LE,RO]{\draftnote}
+   \renewcommand{\headrulewidth}{0pt}
+ }
+
+ % Draft mark on 'empty' pages
+ \fancypagestyle{empty}{
+   \fancyhf{} % clear all header and footer fields
+   \fancyfoot[LE,RO]{\draftnote}
+   \renewcommand{\headrulewidth}{0pt}
+ }
+\else
+ \fancyhead[R]{\bfseries\thepage}
+ \fancyhead[L]{\bfseries\nouppercase{\leftmark}}
+ \fancyfoot[R]{\draftnote}
+ \fancypagestyle{plain}{
+   \fancyhf{} % clear all header and footer fields
+   \fancyfoot[C]{\bfseries\thepage}
+   \fancyfoot[R]{\draftnote}
+   \renewcommand{\headrulewidth}{0pt}
+ }
+ \fancypagestyle{empty}{
+   \fancyhf{} % clear all header and footer fields
+   \fancyfoot[R]{\draftnote}
+   \renewcommand{\headrulewidth}{0pt}
+ }
+\fi
+\makeatother
+
+% Clear Header Style on the Last Empty Odd pages
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else%
+  \hbox{}%
+  \thispagestyle{empty}%              % Empty header styles
+  \newpage%
+  \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
+
+
+% Define a simple copyright page style
+\newcommand{\copyrightpage}[2]{
+\thispagestyle{empty}%              % Empty header styles
+~\\
+\vfill
+\begin{center}
+ {\copyright}#1\\
+ #2\\
+ All Rights Reserved
+\end{center}
+\clearpage
+}
+
+
+% Define a simple quotation page style
+\newcommand{\quotationpage}[2]{
+\thispagestyle{plain}%              % Empty header styles
+\vspace*{\stretch{1}}
+\begin{quotation}
+\emph{#1}
+\begin{flushright}
+#2
+\end{flushright}
+\end{quotation}
+\vspace*{\stretch{3}}
+\clearpage
+}
+
+\usepackage{fancybox}
+\setlength{\shadowsize}{1pt}
+
+% load monitoc with nohints to shut down
+% unusefull warnings about hyperref
+\usepackage[nohints]{minitoc}
+
+% Set minitoc title to match the document contentsname
+\mtcsettitle{minitoc}{\contentsname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algorithms and theorems
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[amsmath,thmmarks,hyperref]{ntheorem}
+
+\setlength{\theorempostskipamount}{15pt}
+
+\theoremstyle{break}
+\theoremheaderfont{\normalfont\bfseries}
+\theoremseparator{}
+\theorembodyfont{\normalfont}
+\theoremsymbol{\rule{1ex}{1ex}}
+\newtheorem{algorithm}{Algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts and Encoding
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Computer modern family
+\usepackage{lmodern}
+% If you need bold small caps with lmodern, uncomment
+% the 2 following lines
+%\rmfamily
+%\DeclareFontShape{T1}{lmr}{bx}{sc}{<->ssub*cmr/bx/sc}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{these}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperreferences
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% choose link colors colors
+\usepackage{color}
+% For pdf
+%\definecolor{linkcol}{rgb}{0,0,0.4}
+%\definecolor{citecol}{rgb}{0.5,0,0}
+%
+% For printing
+\definecolor{linkcol}{rgb}{0,0,0}
+\definecolor{citecol}{rgb}{0,0,0}
+
+\ifpdf
+ \usepackage[backref=page,pdfusetitle,pdfpagelabels=true]
+{hyperref}
+\else
+ \usepackage[backref=page,dvips,pdfusetitle,pdfpagelabels=true]
+{hyperref}
+\fi
+
+\hypersetup
+{
+bookmarksdepth=3,
+bookmarksopenlevel=0,
+bookmarksnumbered=true,
+draft=false, % force to use hyperref even in draft mode
+%pdftoolbar=false, %barre d'outils non visible
+%pdfmenubar=true, %barre de menu visible
+plainpages=false,
+pdfhighlight=/O, %effet d'un clic sur un lien hypertexte
+colorlinks=true, %couleurs sur les liens hypertextes
+pdfdisplaydoctitle=true,
+pdflang=en-US, % Does not seem to work but does not harm
+pdfpagemode=UseOutlines,
+%pdfpagelayout=SinglePage, %ouverture en simple page
+%pdffitwindow=true, %pages ouvertes entierement dans toute la fenetre
+pdfstartview=FitH,
+linkcolor=linkcol, %couleur des liens hypertextes internes
+citecolor=citecol, %couleur des liens pour les citations
+urlcolor=linkcol, %couleur des liens pour les url
+pdfkeywords={keyword 1, keyword 2},
+pdfsubject={PhD Thesis}
+}

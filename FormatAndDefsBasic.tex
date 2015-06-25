@@ -1,0 +1,168 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Common tools
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{ifpdf}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath} % load before txfonts
+\usepackage{amssymb}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algorithms and theorems
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[amsmath,thmmarks,hyperref]{ntheorem}
+
+%\setlength{\theorempostskipamount}{15pt}
+
+%\theoremstyle{break}
+%\theoremheaderfont{\normalfont\bfseries}
+%\theoremseparator{}
+%\theorembodyfont{\normalfont}
+%\theoremsymbol{\rule{1ex}{1ex}}
+%\newtheorem{algorithm}{Algorithm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts and Encoding
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+
+% Use T1 font encoding
+\usepackage[T1]{fontenc}
+
+% Add a few more symbols: mu, bullet points, etc.
+\usepackage{textcomp}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{placeins} % for \FloatBarrier
+%\usepackage[margin=10pt,font=small,labelfont=bf,tableposition=top]{caption}
+%\usepackage[font=footnotesize]{subfig}
+\usepackage{graphicx}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Correct spacing for top captions
+%\usepackage{topcapt}
+%\newcommand{\topcaption}{\caption}
+
+% Tool to merge several rows
+\usepackage{multirow}
+
+% Tool to split a cell (upper left) with a diagonal line (slash)
+%\usepackage{slashbox}
+\usepackage{diagbox}
+
+% Choose a smaller column separation
+\setlength{\tabcolsep}{3pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Expec}{\mathbb{E}}
+\DeclareMathOperator{\grad}{grad}
+
+\newcommand{\argmax}{\operatornamewithlimits{arg\,max}}
+\newcommand{\argmin}{\operatornamewithlimits{arg\,min}}
+\DeclareMathOperator{\median}{median}
+
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\vect}{Vect}
+
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\dotprod}[2]{\langle #1\,\vert\, #2 \rangle}
+\providecommand{\dist}[2]{\operatorname{dist}\left( #1 , #2 \right)}
+
+\providecommand{\liebracket}[2]{\left[ #1\,,\, #2 \right]}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Ad}{Ad}
+
+\providecommand{\simil}[2]{\operatorname{Sim}\left(#1,#2\right)}
+\providecommand{\similb}[3]{\operatorname{Sim}\left(#1,#2,#3\right)}
+\providecommand{\reg}[1]{\operatorname{Reg}\left(#1\right)}
+\providecommand{\jac}[1]{J_{\mathrm{#1}}}
+
+\providecommand{\ud}{\mathrm{d}}
+
+\newcommand{\ba}{\boldsymbol{a}}
+\newcommand{\bA}{\boldsymbol{A}}
+\newcommand{\bc}{\boldsymbol{c}}
+\newcommand{\be}{\boldsymbol{e}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bM}{\boldsymbol{M}}
+\newcommand{\bp}{\boldsymbol{p}}
+\newcommand{\br}{\boldsymbol{r}}
+\newcommand{\bs}{\boldsymbol{s}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bw}{\boldsymbol{w}}
+\newcommand{\bW}{\boldsymbol{W}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\bbeta}{\boldsymbol{\beta}}
+\newcommand{\bpi}{\boldsymbol{\pi}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\bgamma}{\boldsymbol{\gamma}}
+\newcommand{\bnu}{\boldsymbol{\nu}}
+\newcommand{\bphi}{\boldsymbol{\phi}}
+\newcommand{\bPhi}{\boldsymbol{\Phi}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\bPsi}{\boldsymbol{\Psi}}
+\newcommand{\brho}{\boldsymbol{\rho}}
+\newcommand{\bvarphi}{\boldsymbol{\varphi}}
+\newcommand{\bvarsigma}{\boldsymbol{\varsigma}}
+\newcommand{\btau}{\boldsymbol{\tau}}
+
+\newcommand{\IR}{\mathbb{R}}
+
+% Text commands
+\usepackage{xspace}
+% \xspace adds space at the end of a macro designed
+% for use in text, unless the macro is followed by
+% certain punctuation characters
+
+\newcommand{\microns}{\textmu m\xspace}
+
+\newcommand{\cvzr}{Cellvizio\textregistered\xspace}
+\newcommand{\cvz}{Cellvizio\xspace}
+\newcommand{\FCMLeica}{Leica FCM1000 microscope\xspace}
+
+% Add a period to the end of an abbreviation unless there's one
+% already, then \xspace.
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\providecommand{\eg}{e.g\onedot}
+\providecommand{\ie}{i.e\onedot}
+\providecommand{\cf}{cf\onedot}
+\providecommand{\etc}{etc\onedot}
+\providecommand{\etal}{\emph{et~al}\onedot}
+
+\makeatother
+
+
+% define custom figref and secref based on eqref
+\providecommand{\figref}[1]{Fig.~\ref{#1}}
+\providecommand{\Figref}[1]{Figure~\ref{#1}}
+\providecommand{\secref}[1]{Section~\ref{#1}}
+\providecommand{\Secref}[1]{Section~\ref{#1}}
+\providecommand{\chapref}[1]{Chapter~\ref{#1}}
+\providecommand{\Chapref}[1]{Chapter~\ref{#1}}
+
+\providecommand{\algref}[1]{Algorithm~\ref{#1}}
+\providecommand{\Algref}[1]{Algorithm~\ref{#1}}
+\providecommand{\tabref}[1]{Table~\ref{#1}}
+\providecommand{\Tabref}[1]{Table~\ref{#1}} 
