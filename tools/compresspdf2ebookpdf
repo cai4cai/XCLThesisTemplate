@@ -31,6 +31,16 @@ gs $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
 #echo pdftk /tmp/compressed.pdf update_info /tmp/pdftk-report.txt output $F-compressed.pdf
 #pdftk /tmp/compressed.pdf update_info /tmp/pdftk-report.txt output $F-compressed.pdf
 
+# Chrome has issues if exiftool is run last. Make sure smpdf comes afterwards
+if ! [ -x "$(command -v exiftool)" ]; then
+    echo Could not find exiftool - Some tags might have been lost
+else
+    # Restore some pdf tags that might have been lost in the process
+    echo PDF tag transfer using:
+    echo exiftool -overwrite_original -TagsFromFile "$1" "$F-compressed.pdf"
+    exiftool -overwrite_original -TagsFromFile "$1" "$F-compressed.pdf"
+fi
+
 if ! [ -x "$(command -v smpdf)" ]; then
     echo Could not find smpdf - Skipping additional lossless compression
     echo See https://www.coherentpdf.com/compression.html
@@ -42,13 +52,20 @@ else
     mv "$F-compressed2.pdf" "$F-compressed.pdf"
 fi
 
-if ! [ -x "$(command -v exiftool)" ]; then
-    echo Could not find exiftool - Some tags might have been lost
+if ! [ -x "$(command -v cpdf)" ]; then
+    echo Could not find cpdf - Skipping additional annotation copying
+    echo See https://www.coherentpdf.com/compression.html
 else
-    # Restore some pdf tags that might have been lost in the process
-    echo PDF tag transfer using:
-    echo exiftool -overwrite_original -TagsFromFile "$1" "$F-compressed.pdf"
-    exiftool -overwrite_original -TagsFromFile "$1" "$F-compressed.pdf"
+    # Use cpdf to copy information over
+    echo PDF ID copy using:
+    echo cpdf -copy-id-from "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
+    cpdf -copy-id-from "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
+    mv "$F-compressed2.pdf" "$F-compressed.pdf"
+    
+    echo PDF annotation copy using:
+    echo cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
+    cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
+    mv "$F-compressed2.pdf" "$F-compressed.pdf"
 fi
 
 # Get the new file size
