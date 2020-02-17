@@ -13,6 +13,8 @@
 *.out
 *.toc
 *.thm
+*.lof
+*.lot
 
 _*_.synctex.gz
 _*_.tex
