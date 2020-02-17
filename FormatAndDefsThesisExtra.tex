@@ -2,7 +2,12 @@
 % Layout
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[left=1.5in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead,headheight=13.6pt]{geometry}
-\renewcommand{\baselinestretch}{1.05}
+% Use 1.5 line spacing. UCL says
+% "Double or one-and-a-half spacing should be used in typescripts,
+% except for indented quotations or footnotes where single spacing may
+% be used."
+\usepackage{setspace}
+\onehalfspace
 
 % Draft note
 % No draft note (empty one) by default
@@ -102,6 +107,15 @@
  All Rights Reserved
 \end{center}
 \clearpage
+}
+
+% Define a simple declaration page style
+\newcommand{\declarationpage}[1]{
+\thispagestyle{plain}%
+I, #1, confirm that the work presented in this thesis is my own. Where
+information has been derived from other sources, I confirm that this
+has been indicated in the thesis.
+\cleardoublepage
 }
 
 
