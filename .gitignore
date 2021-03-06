@@ -17,6 +17,7 @@
 *.lot
 *.fdb_latexmk
 *.fls
+*.xbb
 
 _*_.synctex.gz
 _*_.tex

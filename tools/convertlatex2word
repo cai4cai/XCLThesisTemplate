@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+
+# Sanity checks
+if ! [ -x "$(command -v make4ht)" ]; then
+    echo "make4ht is not installed -> exit"
+    exit 1
+fi
+if ! [ -x "$(command -v pandoc)" ]; then
+    echo "pandoc is not installed -> exit"
+    exit 1
+fi
+if ! [ -x "$(command -v ebb)" ]; then
+    echo "ebb is not installed -> exit"
+    exit 1
+fi
+
+# Get the file path without the file extension
+F=$1
+F=${F%.*}
+Fpath=$(dirname "$F.tex")
+#echo Path: $Fpath
+
+# Load some handy configuration
+tex4htcfg=$(dirname "$0")/tex4ht_no_css.cfg
+
+export clean_ext="aux bbl blg brf idx ilg ind lof log lol lot out toc synctex.gz fdb_latexmk fls dvi 4ct 4tc idv lg tmp xref"
+export image_ext="ext png eps jpg jpeg"
+
+# See https://github.com/michal-h21/make4ht/issues/6
+for ext in $image_ext; do
+     find $Fpath -name "*.$ext"  -exec ebb -x {} \;
+done
+
+for ext in $clean_ext; do
+     echo "running:rm -f *.$ext"
+     rm -f *.$ext
+done
+
+make4ht -uf html5+latexmk_build+tidy -c $tex4htcfg $F.tex
+mv $F.html $F-make4ht_no_css.html
+pandoc -s $F-make4ht_no_css.html -o $F.docx
+
+rm -f $F-make4ht_no_css.html
+
+for ext in $clean_ext; do
+     echo "running:rm -f *.$ext"
+     rm -f *.$ext
+done

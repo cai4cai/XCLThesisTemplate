@@ -2,7 +2,7 @@
 
 # Sanity checks
 if ! [ -x "$(command -v gs)" ]; then
-    echo gs is not installed -> exit
+    echo "gs is not installed -> exit"
     exit 1
 fi
 
@@ -21,7 +21,7 @@ F=${F%.*}
 pdfmarks=$(dirname "$0")/mktpdfmarks
 
 # Use gs to compress the file in a lossy fashion
-echo PDF lossy compression using:
+echo "PDF lossy compression using:"
 echo $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
 gs $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
 
@@ -33,36 +33,36 @@ gs $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
 
 # Chrome has issues if exiftool is run last. Make sure smpdf comes afterwards
 if ! [ -x "$(command -v exiftool)" ]; then
-    echo Could not find exiftool - Some tags might have been lost
+    echo "Could not find exiftool - Some tags might have been lost"
 else
     # Restore some pdf tags that might have been lost in the process
-    echo PDF tag transfer using:
+    echo "PDF tag transfer using:"
     echo exiftool -overwrite_original -TagsFromFile "$1" "$F-compressed.pdf"
     exiftool -overwrite_original -TagsFromFile "$1" "$F-compressed.pdf"
 fi
 
 if ! [ -x "$(command -v smpdf)" ]; then
-    echo Could not find smpdf - Skipping additional lossless compression
+    echo "Could not find smpdf - Skipping additional lossless compression"
     echo See https://www.coherentpdf.com/compression.html
 else
     # Use smpdf to further compress the file in a lossless fashion
-    echo PDF lossless compression using:
+    echo "PDF lossless compression using:"
     echo smpdf "$F-compressed.pdf" -o "$F-compressed2.pdf"
     smpdf "$F-compressed.pdf" -o "$F-compressed2.pdf"
     mv "$F-compressed2.pdf" "$F-compressed.pdf"
 fi
 
 if ! [ -x "$(command -v cpdf)" ]; then
-    echo Could not find cpdf - Skipping additional annotation copying
+    echo "Could not find cpdf - Skipping additional annotation copying"
     echo See https://www.coherentpdf.com/compression.html
 else
     # Use cpdf to copy information over
-    echo PDF ID copy using:
+    echo "PDF ID copy using:"
     echo cpdf -copy-id-from "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
     cpdf -copy-id-from "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
     mv "$F-compressed2.pdf" "$F-compressed.pdf"
     
-    echo PDF annotation copy using:
+    echo "PDF annotation copy using:"
     echo cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
     cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
     mv "$F-compressed2.pdf" "$F-compressed.pdf"
