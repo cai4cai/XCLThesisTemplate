@@ -20,6 +20,10 @@ F=${F%.*}
 Fpath=$(dirname "$F.tex")
 #echo Path: $Fpath
 
+# Direct use of pandoc is unfortunately often not good enough
+#pandoc -s $F.tex --bibliography $F.bib --citeproc -o $F.docx
+#exit 1
+
 # Load some handy configuration
 tex4htcfg=$(dirname "$0")/tex4ht_no_css.cfg
 
