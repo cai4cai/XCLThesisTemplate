@@ -1,0 +1,17 @@
+\RequirePackage[l2tabu, orthodox]{nag}
+\RequirePackage{fix-cm}
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage[svgnames]{xcolor}
+\usepackage[color={[rgb]{1,0.8,0.8}},scale=0.5]{draftwatermark}
+% The text can be changed from the command line
+% pdflatex "\def\wmtxt{Custom Text}\input{plainwatermark}"
+\providecommand{\wmtxt}{UNDER REVIEW}% fallback definition
+
+\begin{document}
+\thispagestyle{empty}
+\SetWatermarkText{\textsf{\textbf{\wmtxt}}}
+~
+\end{document}

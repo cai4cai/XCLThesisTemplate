@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+
+# Sanity checks
+if ! [ -x "$(command -v qpdf)" ]; then
+    echo "qpdf is not installed -> exit"
+    exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+    echo "Input file argument is missing -> exit"
+    exit 1
+fi
+
+scriptdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+echo "Running from: " $scriptdir
+
+filename=$(basename $1)
+filenamenoext=${filename%.*}
+filedir="$( cd "$( dirname "$1" )" >/dev/null 2>&1 && pwd )"
+inputfile="$filedir/$filename"
+outputfile="$filedir/$filenamenoext-watermarked.pdf"
+echo "Running on $inputfile to $outputfile"
+
+if ! [ -f $inputfile ]; then
+    echo "$inputfile does not exist on your filesystem -> exit"
+    exit 1
+fi
+
+if [[ -f $outputfile ]]; then
+    echo "$outputfile already exists on your filesystem -> exit"
+    exit 1
+fi
+
+watermarktext="Confidential"
+if [[ $# -gt 1 ]]; then
+    watermarktext="$2"
+    echo "Using custom text: $2"
+fi
+
+tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'watermarktmpdir')
+echo "Creating plain watermark in $tmp_dir"
+pdflatex -output-directory $tmp_dir "\def\wmtxt{$watermarktext}\input{$scriptdir/plainwatermark.tex}" 1>/dev/null
+
+qpdf --underlay $tmp_dir/plainwatermark.pdf --repeat=1 -- $inputfile $outputfile
+echo "Created $outputfile"
