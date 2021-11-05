@@ -1,0 +1,14 @@
+name: Build LaTeX document
+on: [push]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Install xmllint
+        run: sudo apt-get install -y texlive-full
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: Thesis.tex
