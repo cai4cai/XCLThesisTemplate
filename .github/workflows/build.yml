@@ -1,0 +1,35 @@
+name: Build LaTeX document
+on: [push]
+env:
+  COMMAND: latexmk -pdf -interaction=nonstopmode -halt-on-error Thesis.tex
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install TeX Live on Linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: sudo apt update && sudo apt install -y texlive-full
+
+      - name: Install TeX Live using Homebrew
+        if: startsWith(matrix.os, 'macos')
+        run: brew install --cask mactex
+
+      - name: Compile LaTeX document on macOS
+        if: startsWith(matrix.os, 'ubuntu')
+        run: eval "$COMMAND"
+
+      - name: Compile LaTeX document on macOS
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          eval "$(/usr/libexec/path_helper)"
+          eval "$COMMAND"
