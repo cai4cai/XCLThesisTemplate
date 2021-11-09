@@ -24,7 +24,7 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         run: brew install --cask mactex
 
-      - name: Compile LaTeX document on macOS
+      - name: Compile LaTeX document on Linux
         if: startsWith(matrix.os, 'ubuntu')
         run: eval "$COMMAND"
 
