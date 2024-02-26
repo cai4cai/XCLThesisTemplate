@@ -18,8 +18,10 @@
 *.fdb_latexmk
 *.fls
 *.xbb
+*.bcf
+*.run.xml
 
 _*_.synctex.gz
 _*_.tex
 
-.#
+.#*

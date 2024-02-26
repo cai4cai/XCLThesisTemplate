@@ -7,7 +7,7 @@
 % incorrect. If you know what you’re doing, omit orthodox.
 \RequirePackage[l2tabu, orthodox]{nag} 
 
-\documentclass[british,a4paper,11pt,twoside]{StyleThese}
+\documentclass[british,a4paper,11pt,twoside]{ThesisStyle}
 
 \makeatletter
 \title{Lorem Ipsum}\let\thetitle\@title
@@ -20,6 +20,8 @@
 \newcommand{\draftnote}{\textcolor[gray]{0.5}{\textbf{DRAFT -- \today}}}
 \include{FormatAndDefsThesisExtra}
 
+\addbibresource{JNFull.bib}
+\addbibresource{ThesisBibliography.bib}
 
 \begin{document}
 
@@ -64,6 +66,6 @@ An impact statement is often required.
 
 \backmatter
 
-\bibliography{JNFull,ThesisBibliography}
+\printbibliography
 
 \end{document}
