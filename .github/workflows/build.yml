@@ -27,7 +27,7 @@ jobs:
 
       - name: Install MacTeX using Homebrew
         if: startsWith(matrix.os, 'macos')
-        run: brew install --cask mactex
+        run: brew update && brew install --cask mactex
 
       - name: Compile LaTeX document on macOS
         if: startsWith(matrix.os, 'macos')
