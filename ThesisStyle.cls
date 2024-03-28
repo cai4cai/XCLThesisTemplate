@@ -2,8 +2,8 @@
 %% A hacked thesis Class based on `book.cls',
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{StyleThese}
-              [2004/02/16 v1.4f
+\ProvidesClass{ThesisStyle}
+              [2024/03/27 v1.5f
  Standard LaTeX document class]
 \newcommand\@ptsize{}
 \newif\if@restonecol
