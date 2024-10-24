@@ -180,6 +180,8 @@ has been indicated in the thesis.
 % Make parenthical citations the default
 \renewcommand\cite{\parencite}
 
+% Need to bypass an error with texcount https://github.com/cai4cai/XCLThesisTemplate/issues/5
+%TC:ignore
 \DeclareCiteCommand{\citet}
   {\boolfalse{citetracker}%
    \boolfalse{pagetracker}%
@@ -190,6 +192,7 @@ has been indicated in the thesis.
    \printtext[bibhyperref]{\printnames{labelname}~[\printfield{year}]}}
   {\multicitedelim}
   {\usebibmacro{postnote}}
+%TC:endignore
 
 \renewcommand*{\labelalphaothers}{}
 \DeclareLabelalphaTemplate{
