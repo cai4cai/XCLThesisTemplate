@@ -22,7 +22,7 @@ pdfmarks=$(dirname "$0")/mktpdfmarks
 
 # Use gs to compress the file in a lossy fashion
 echo "PDF lossy compression using:"
-echo $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
+echo gs $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
 gs $PDF2PDFFLAGS -sOutputFile="$F-compressed.pdf" "$1" $pdfmarks
 
 # Chrome has issues if exiftool is run last. Make sure cpdf comes afterwards
@@ -38,8 +38,10 @@ fi
 if ! [ -x "$(command -v cpdf)" ]; then
     echo "Could not find cpdf - Skipping additional lossless compression and annotation copying"
     echo "See https://github.com/johnwhitington/cpdf-source"
+    echo "https://github.com/coherentgraphics/cpdf-binaries"
+    echo "https://www.coherentpdf.com/mac.html"
 else
-    # Use smpdf to further compress the file in a lossless fashion
+    # Use cpdf to further compress the file in a lossless fashion
     echo "PDF lossless compression using:"
     echo cpdf  -squeeze "$F-compressed.pdf" -o "$F-compressed2.pdf"
     cpdf  -squeeze "$F-compressed.pdf" -o "$F-compressed2.pdf"
@@ -50,11 +52,13 @@ else
     echo cpdf -copy-id-from "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
     cpdf -copy-id-from "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
     mv "$F-compressed2.pdf" "$F-compressed.pdf"
-    
-    echo "PDF annotation copy using:"
-    echo cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
-    cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
-    mv "$F-compressed2.pdf" "$F-compressed.pdf"
+
+    #Not sure why this was here initially but this is now problematic
+    #https://github.com/johnwhitington/cpdf-source/issues/405
+    #echo "PDF annotation copy using:"
+    #echo cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
+    #cpdf -copy-annotations "$1" "$F-compressed.pdf" -o "$F-compressed2.pdf"
+    #mv "$F-compressed2.pdf" "$F-compressed.pdf"
 fi
 
 # Get the new file size
