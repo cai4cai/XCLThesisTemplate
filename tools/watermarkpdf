@@ -39,7 +39,11 @@ fi
 
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'watermarktmpdir')
 echo "Creating plain watermark in $tmp_dir"
-pdflatex -output-directory $tmp_dir "\def\wmtxt{$watermarktext}\input{$scriptdir/plainwatermark.tex}" 1>/dev/null
+pdflatex -output-directory $tmp_dir -interaction=nonstopmode "\def\wmtxt{$watermarktext}\input{$scriptdir/plainwatermark.tex}" &> $tmp_dir/pdflatexlog.txt
+if [ $? -ne 0 ]; then
+    echo "pdflatex failed, see $tmp_dir/pdflatexlog.txt -> exit (check your installed packages)"
+    exit 1
+fi
 
 qpdf --underlay $tmp_dir/plainwatermark.pdf --repeat=1 -- $inputfile $outputfile
 echo "Created $outputfile"
