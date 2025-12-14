@@ -179,6 +179,8 @@ has been indicated in the thesis.
 \usepackage[style=alphabetic,maxnames=99,maxcitenames=1,giveninits=false,uniquename=init,backref=true]{biblatex}
 % Make parenthical citations the default
 \renewcommand\cite{\parencite}
+% Help transition from natbib
+\newcommand\citep{\parencite}
 
 % Need to bypass an error with texcount https://github.com/cai4cai/XCLThesisTemplate/issues/5
 %TC:ignore
@@ -208,6 +210,12 @@ has been indicated in the thesis.
     \field{year}
   }
 }
+
+\usepackage{enumitem}
+\defbibenvironment{thesisbibenv}
+  {\description[font=\normalfont]}
+  {\enddescription}
+  {\item[\mkbibbrackets{\printfield{labelalpha}}]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hyperreferences
